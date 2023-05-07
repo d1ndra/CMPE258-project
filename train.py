@@ -61,9 +61,9 @@ def get_resnet_model():
         layer.trainable = False
     # Add new fully connected layers
     x = tf.keras.layers.Flatten()(resnet_model.output)
-    x = tf.keras.layers.Dense(128, activation='relu')(x)
+    x = tf.keras.layers.Dense(256, activation='relu')(x)
     x = tf.keras.layers.Dropout(0.5)(x)
-    x = tf.keras.layers.Dense(10, activation='softmax')(x)
+    x = tf.keras.layers.Dense(200, activation='softmax')(x)
     model = tf.keras.models.Model(resnet_model.input, x)
     print("returning resnet50 model")
     return model
@@ -84,7 +84,7 @@ def train_model():
         verbose=1)
     history = model.fit(X_train, y_train, 
                     batch_size=batch_size, 
-                    epochs=10, 
+                    epochs=200, 
                     validation_data=(X_test, y_test),
                     callbacks=[cp_callback])
     model.save('resnet50_model.h5')
