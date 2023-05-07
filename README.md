@@ -8,7 +8,8 @@ Get data using http://www.vision.caltech.edu/datasets/cub_200_2011/
 Untar using `tar -czvf CUB_200_2011.tgz`
 Place the python files from this repo in the same folder.
 
-* Execute below code only once *
+**Execute below code only once**
+
 To get the data in one folder and the desired info:
 `python pre_process.py`
 
