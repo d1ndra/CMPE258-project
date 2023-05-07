@@ -38,8 +38,8 @@ def train_model():
                                                include_top=False,
                                                weights='imagenet')
 
-    for layer in base_model.layers:
-        layer.trainable = False
+    # for layer in base_model.layers:
+    #     layer.trainable = False
 
     model = tf.keras.Sequential([
         base_model,
