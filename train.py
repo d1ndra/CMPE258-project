@@ -24,18 +24,16 @@ def load_data(directory, df):
             labels.append(label)
     return np.array(images), np.array(labels)
 
-def train_model():
-    # train = pd.read_csv('train_info.csv')
-    # test = pd.read_csv('test_info.csv') 
-    # train_dir = 'train_data'
-    # test_dir = 'test_data'
-    # X_train, y_train = load_data(train_dir, train)
-    # X_test, y_test = load_data(test_dir, test)
-    # y_train = tf.keras.utils.to_categorical(y_train)
-    # y_test = tf.keras.utils.to_categorical(y_test)
-    # X_train = X_train / 255.0
-    # X_test = X_test / 255.0
 
+def load_saved_data(train_im="train_images.npy", train_l="train_labels.npy", test_im="test_images.npy", test_l="test_labels.npy"):
+    X_train = np.load(train_im)
+    y_train = np.load(train_l)
+    X_test = np.load(test_im)
+    y_test = np.load(test_l)
+    return X_train, y_train, X_test, y_test
+
+def train_model():
+    X_train, y_train, X_test, y_test = load_saved_data()
     base_model = tf.keras.applications.MobileNetV2(input_shape=(224, 224, 3),
                                                include_top=False,
                                                weights='imagenet')
