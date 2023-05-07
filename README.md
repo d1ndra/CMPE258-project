@@ -2,6 +2,28 @@
 The Caltech-UCSD Birds-200-2011 Dataset
 ===========================================
 
+# Instructions to train model
+
+Get data using http://www.vision.caltech.edu/datasets/cub_200_2011/
+Untar using `tar -czvf CUB_200_2011.tgz`
+Place the python files from this repo in the same folder.
+
+* Execute below code only once *
+To get the data in one folder and the desired info:
+`python pre_process.py`
+
+To load the images and save as `np` format so we don't have to re-run it for every training iteration
+Note: this saves the labels in the `y_train` and `y_test` data so you might want to change it to use bounding boxes, segmentations.
+`python save_as_np.py`
+
+## Training the model
+
+Before creating the model if checkpoints are desired, create the folder specified in `checkpoint_path` variable.
+`python train.py`
+
+
+Below is original readme from the dataset
+____________________________________________________
 For more information about the dataset, visit the project website:
 
   http://www.vision.caltech.edu/visipedia

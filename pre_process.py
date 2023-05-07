@@ -5,8 +5,8 @@ from google.protobuf import text_format
 import pandas as pd
 
 import os
-os.chdir('CUB_200_2011')
-os.path.abspath('.')
+# os.chdir('CUB_200_2011')
+# os.path.abspath('.')
 
 labels = pd.read_csv("image_class_labels.txt", header=None, sep=" ")
 labels.columns = ["id", "label"]
