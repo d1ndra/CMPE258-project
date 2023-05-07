@@ -1,0 +1,8 @@
+attributes/
+chkpoint/
+images/
+parts/
+*_data/
+training*/
+*.txt
+*.csv
