@@ -49,7 +49,9 @@ def get_resnet_model():
     x = resnet_model.output
     x = tf.keras.layers.GlobalAveragePooling2D()(x)
     x = tf.keras.layers.Dense(256, activation='relu')(x)
-    x = tf.keras.layers.Dropout(0.5)(x)
+    x = tf.keras.layers.Dropout(0.3)(x)
+    x = tf.keras.layers.Dense(256, activation='relu')(x)
+    x = tf.keras.layers.Dropout(0.3)(x)
     x = tf.keras.layers.Dense(200, activation='softmax')(x)
     model = tf.keras.models.Model(resnet_model.input, x)
     print("returning resnet50 model")
@@ -61,13 +63,13 @@ def train_model():
     
     # Data augmentation
     data_augmentation = ImageDataGenerator(
-        rotation_range=10,
-        width_shift_range=0.1,
-        height_shift_range=0.1,
-        shear_range=0.1,
-        zoom_range=0.1,
+        rotation_range=20,
+        width_shift_range=0.2,
+        height_shift_range=0.2,
+        shear_range=0.2,
+        zoom_range=0.2,
         horizontal_flip=True,
-        brightness_range=[0.9, 1.1],
+        brightness_range=[0.8, 1.2],
         fill_mode='nearest')
     
     # Load the pre-trained ResNet50V2 model
@@ -86,11 +88,11 @@ def train_model():
     x = layers.Flatten()(x)
     
     # Define the dense layers
+    x = layers.Dense(512, activation='relu')(x)
+    x = layers.Dropout(0.5)(x)
+    x = layers.Dense(256, activation='relu')(x)
+    x = layers.Dropout(0.5)(x)
     x = layers.Dense(128, activation='relu')(x)
-    x = layers.Dropout(0.5)(x)
-    x = layers.Dense(64, activation='relu')(x)
-    x = layers.Dropout(0.5)(x)
-    x = layers.Dense(32, activation='relu')(x)
     x = layers.Dropout(0.5)(x)
     
     # Define the output layer
@@ -101,7 +103,7 @@ def train_model():
     
     # Compile the model
     model.compile(loss='categorical_crossentropy',
-                  optimizer='adam',
+                  optimizer=tf.keras.optimizers.Adam(lr=1e-4),
                   metrics=['accuracy'])
     
     # Print the model summary
@@ -117,12 +119,13 @@ def train_model():
     
     # Train the model
     history = model.fit(data_augmentation.flow(X_train, y_train, batch_size=32),
-                        epochs=200, 
+                        epochs=150, 
                         validation_data=(X_test, y_test),
                         callbacks=[cp_callback], validation_freq=10)
     
     # Save the model
     model.save('resnet50_model.h5')
+
 
 if __name__ == '__main__':
     train_model()
